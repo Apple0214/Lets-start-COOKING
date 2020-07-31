@@ -1,0 +1,17 @@
+<p>検索</p>
+<%= form_tag(recipes_path,:method => 'get') do %>
+  <%= text_field_tag :recipe %>
+  <%= submit_tag 'Search', :title => nil %>
+<% end %>
+
+<ul>
+  <% @recipes.each do |recipe| %>
+  <li>
+    <%= link_to recipe.title, recipe %>
+    <%= recipe.created_at %>
+    <%= recipe.status %>
+  </li>
+  <%= link_to "編集",edit_recipe_path(recipe) %>
+  <%= link_to "削除",recipe, method: :delete %>
+  <% end %>
+</ul>

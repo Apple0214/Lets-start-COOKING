@@ -1,0 +1,26 @@
+<h2>ユーザー情報</h2>
+
+<%= form_for(@user) do |f| %>
+
+	<%= render 'layouts/error_messages', resource: @user %>
+
+	<div>
+		<%= f.label :name %>
+		<%= f.text_field :name %>
+	</div>
+
+	<div>
+		<%= f.label :image %>
+		<%= f.attachment_field :profile_iamege %>
+	</div>
+
+	<div>
+		<%= f.label :introduciton %>
+		<%= f.text_area :introduciton %>
+	</div>
+
+	<div>
+		<%= f.submit %>
+	</div>
+
+<% end %>
