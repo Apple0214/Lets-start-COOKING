@@ -1,0 +1,18 @@
+<h2>料理レシピ</h2>
+<%= form_with model: @recipe, local: true do |f| %>
+  料理名<%= f.text_field :title %><br >
+  写真<%= f.attachment_field :photo %><br >
+  材料<%= f.text_field :item %><br >
+  作り方<%= f.text_field :cooking %><br >
+  <fieldset>
+  ジャンル<%= f.text_field :genre_id, list: "genre", autocomplete: "on" %><br >
+  <datalist id="genre">
+  <% @genres.each do |genre| %>
+  <option value="<%= genre.name %>">
+  <% end %>
+  </datalist>
+  <%= f.submit 'レシピ作成' %>
+  </fieldset>
+  <%= link_to 'ホーム画面', root_path %>
+<% end %>
+

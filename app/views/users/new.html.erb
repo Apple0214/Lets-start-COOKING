@@ -1,0 +1,19 @@
+<div class='body'>
+<div class='container'>
+<div class='row'>
+
+<table>
+    <tr>
+    <th>ユーザー名</th><th>レシピ名</th><th>評価</th>
+  </tr>
+  <% @users.each do |user| %>
+  <tr>
+    <td><%= user.name %></td>
+    <td><%= link_to recipe.title, recipe_path(recipe) %></td>
+    <td></td>
+  </tr>
+  <% end %>
+</table>
+</div>
+</div>
+</div>

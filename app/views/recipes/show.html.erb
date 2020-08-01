@@ -1,0 +1,47 @@
+<div>
+<h2>全てのレシピ</h2>
+<p>（全<%= @recipes.count %>件）</p>
+</div>
+<div>
+  <% @recipes.each do |recipe| %>
+  <%= attachment_image_tag @recipe, :photo, fill:"40x40", size:"40x40" %>
+  <%= recipe.photo %>
+  <%= link_to recipe_path(recipe.id) do %>
+  <%= recipe.title %>
+ <% end %>
+ <% end %>
+</div>
+<h1>レシピ一覧</h1>
+<div>
+<table>
+    <tr>
+      <th>レシピ名</th>
+      <th>ユーザー名</th>
+      <th>投稿日</th>
+      <th>更新日時</th>
+    </tr>
+    <% @recipes.each do |recipe| %>
+    <tr>
+      <th><%= recipe.title %></th>
+      <th><%#= recipe.user_name %></th>
+      <th><%= recipe.created_at %></th>
+      <th><%= recipe.updated_at %></th>
+      <!-- いいね機能 -->
+    <td>
+      <% if recipe.liked_by?(current_user) %>
+        <%= link_to recipe_likes_path(recipe), method: :delete do %>
+          <span class="glyphicon glyphicon-heart"><%= recipe.likes.count%>いいね</span>
+        <% end %>
+      <% else %>
+        <%= link_to recipe_likes_path(recipe), method: :post do %>
+          <span class="glyphicon glyphicon-heart-empty"><%= recipe.likes.count %>いいね</span>
+        <% end %>
+      <% end %>
+    </td>
+      <!-- コメント機能 -->
+    <td>コメント数：<%= recipe.comments.count %></td>
+    </tr>
+    <% end %>
+</table>
+</div>
+ <!--    <%# @all_ranks.each do |recipe| %>(ランキング機能実装、ブックマーク機能) -->

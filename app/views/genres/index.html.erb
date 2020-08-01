@@ -1,0 +1,11 @@
+<div>
+<h2>全てのジャンル</h2>
+<p>（全<%= @genres.count %>件）</p>
+</div>
+<div>
+  <% @genres.each do |genre| %>
+  <%= link_to genre_path(genre.id) do %>
+  <%= genre.name %>
+ <% end %>
+ <% end %>
+</div>

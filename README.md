@@ -21,5 +21,3 @@
 
 ### 機能一覧
 https://docs.google.com/spreadsheets/d/1zt-fjVQsUU6ErA3uYOqdGuuhhv5WqDuXRpGdOEjrQCc/edit?usp=sharing
-
-
