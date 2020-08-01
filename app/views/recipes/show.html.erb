@@ -4,7 +4,7 @@
 </div>
 <div>
   <% @recipes.each do |recipe| %>
-  <%= attachment_image_tag @recipe, :photo, fill:"40x40",  fallback: "no_image.jpg", size:"40x40" %>
+  <%= attachment_image_tag @recipe, :photo, fill:"40x40", size:"40x40" %>
   <%= recipe.photo %>
   <%= link_to recipe_path(recipe.id) do %>
   <%= recipe.title %>
@@ -23,12 +23,12 @@
     <% @recipes.each do |recipe| %>
     <tr>
       <th><%= recipe.title %></th>
-      <th><%= recipe.user_name %></th>
+      <th><%#= recipe.user_name %></th>
       <th><%= recipe.created_at %></th>
-      <th><%= recipe.update_at %></th>
+      <th><%= recipe.updated_at %></th>
       <!-- いいね機能 -->
     <td>
-      <% if recipe.like_by?(current_user) %>
+      <% if recipe.liked_by?(current_user) %>
         <%= link_to recipe_likes_path(recipe), method: :delete do %>
           <span class="glyphicon glyphicon-heart"><%= recipe.likes.count%>いいね</span>
         <% end %>
@@ -39,7 +39,7 @@
       <% end %>
     </td>
       <!-- コメント機能 -->
-    <td>コメント数：<%= recipe.recipe_comments.count %></td>
+    <td>コメント数：<%= recipe.comments.count %></td>
     </tr>
     <% end %>
 </table>

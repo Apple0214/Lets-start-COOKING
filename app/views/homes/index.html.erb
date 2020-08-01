@@ -7,11 +7,9 @@
 <ul>
   <% @recipes.each do |recipe| %>
   <li>
+    <%= attachment_image_tag @recipe, :photo, fill:"40x40", size:"40x40" %>
     <%= link_to recipe.title, recipe %>
     <%= recipe.created_at %>
-    <%= recipe.status %>
   </li>
-  <%= link_to "編集",edit_recipe_path(recipe) %>
-  <%= link_to "削除",recipe, method: :delete %>
   <% end %>
 </ul>
