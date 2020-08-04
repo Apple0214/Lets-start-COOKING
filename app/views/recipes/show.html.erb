@@ -1,47 +1,60 @@
 <div>
-<h2>全てのレシピ</h2>
-<p>（全<%= @recipes.count %>件）</p>
+<h2>指定したレシピ</h2>
 </div>
 <div>
-  <% @recipes.each do |recipe| %>
-  <%= attachment_image_tag @recipe, :photo, fill:"40x40", size:"40x40" %>
-  <%= recipe.photo %>
-  <%= link_to recipe_path(recipe.id) do %>
-  <%= recipe.title %>
- <% end %>
- <% end %>
+  <%= link_to recipe_path(@recipe.id) do %>
+  <%= attachment_image_tag @recipe, :photo, fill:"40x40", size:"40x40" %><br >
+  <% end %>
+  レシピ名<%= @recipe.title %><br >><br >
+  ユーザー名<%= @recipe.user.name %><br >><br >
+  レシピ内容<%= @recipe.cooking %><br >><br >
+  コメント一覧
+  <% @comments.each do |c| %>
+    <div>
+      <% if c.user.present? %>
+        <%= link_to user_path(c.user_id) do %>
+        <% end %>
+      <%= c.content %><br >
+      <%= "#{c.user.name_kanji_sei} #{c.user.name_kanji_mei}" if c.user.present?%><br >
+    </div><br >
+  <% end %>
+  <% end %>
+  新規コメント
+  <% if user_signed_in? %>
+    <%= form_with(model: [@recipe, @comment], local: true, ) do |f| %>
+      <%= f.text_area :content, class: "form-control", rows: 5 %>
+      <%= button_tag type: "submit", class: "btn btn-success float-right mt-1" do %>
+        <i class="far fa-comments"></i> コメントする
+      <% end %>
+    <% end %>
+  <% end %>><br >
+  いいね<%= render 'recipes' %>
 </div>
-<h1>レシピ一覧</h1>
+
+<h2>関連したレシピ一覧</h2>
 <div>
 <table>
     <tr>
       <th>レシピ名</th>
       <th>ユーザー名</th>
       <th>投稿日</th>
-      <th>更新日時</th>
     </tr>
     <% @recipes.each do |recipe| %>
     <tr>
       <th><%= recipe.title %></th>
-      <th><%#= recipe.user_name %></th>
+      <th><%= recipe.user.name %></th>
       <th><%= recipe.created_at %></th>
-      <th><%= recipe.updated_at %></th>
       <!-- いいね機能 -->
     <td>
-      <% if recipe.liked_by?(current_user) %>
-        <%= link_to recipe_likes_path(recipe), method: :delete do %>
-          <span class="glyphicon glyphicon-heart"><%= recipe.likes.count%>いいね</span>
-        <% end %>
-      <% else %>
-        <%= link_to recipe_likes_path(recipe), method: :post do %>
-          <span class="glyphicon glyphicon-heart-empty"><%= recipe.likes.count %>いいね</span>
-        <% end %>
-      <% end %>
+      <%= render 'recipes' %>
     </td>
-      <!-- コメント機能 -->
+      <!-- コメント数確認機能 -->
     <td>コメント数：<%= recipe.comments.count %></td>
     </tr>
     <% end %>
 </table>
+
+<div>
+
 </div>
- <!--    <%# @all_ranks.each do |recipe| %>(ランキング機能実装、ブックマーク機能) -->
+</div>

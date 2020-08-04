@@ -3,7 +3,6 @@ class LikesController < ApplicationController
   def like
     like = current_user.likes.new(recipe_id: @recipe.id)
     like.save
-    redirect_to
   end
 
   def unlike

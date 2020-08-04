@@ -1,13 +1,8 @@
 <div>
-<h2>全てのジャンル</h2>
-<p>（全<%= @genres.count %>件）</p>
+<h2>指定したジャンル</h2>
 </div>
 <div>
-  <% @genres.each do |genre| %>
-  <%= link_to genre_path(genre.id) do %>
-  <%= genre.name %>
- <% end %>
- <% end %>
+  <%= @genre.name %>
 </div>
 
 <div>
@@ -26,16 +21,16 @@
       <th><%= recipe.title %></th>
       <th><%#= recipe.user_name %></th>
       <th><%= recipe.created_at %></th>
-      <th><%= recipe.update_at %></th>
+      <th><%= recipe.updated_at %></th>
       <!-- いいね機能 -->
     <td>
-      <% if recipe.favorite_by?(current_user) %>
-        <%= link_to recipe_favorites_path(recipe), method: :delete do %>
-          <span class="glyphicon glyphicon-heart"><%= recipe.favorites.count%></span>
+      <% if recipe.liked_by?(current_user) %>
+        <%= link_to recipe_likes_path(recipe), method: :delete do %>
+          <span class="glyphicon glyphicon-heart"><%= recipe.likes.count%></span>
         <% end %>
       <% else %>
-        <%= link_to recipe_favorites_path(recipe), method: :post do %>
-          <span class="glyphicon glyphicon-heart-empty"><%= recipe.favorites.count %></span>
+        <%= link_to recipe_likes_path(recipe), method: :post do %>
+          <span class="glyphicon glyphicon-heart-empty"><%= recipe.likes.count %></span>
         <% end %>
       <% end %>
     </td>

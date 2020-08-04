@@ -13,8 +13,9 @@ Rails.application.routes.draw do
   resources :genres, only: [:index, :show, :new, :create]
   #ネストすることによって、どのレシピに対するコメントかが分かるようにしたい。
   resources :recipes, only: [:index, :show, :new, :create] do
+    resources :comments, only: [:create]
     resources :likes, only: [:create, :destroy]
   end
   resources :homes, only: [:index, :new]
-  resources :user,only: [:edit, :new]
+  resources :user,only: [:show, :edit, :new]
 end

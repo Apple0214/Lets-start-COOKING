@@ -4,10 +4,15 @@
 </div>
 <div>
   <% @recipes.each do |recipe| %>
-  <%= attachment_image_tag @recipe, :photo, fill:"40x40", size:"40x40" %>
-  <%= recipe.photo %>
+  <%= attachment_image_tag recipe, :photo, fill:"40x40", size:"40x40" %>
   <%= link_to recipe_path(recipe.id) do %>
   <%= recipe.title %>
  <% end %>
  <% end %>
 </div>
+<h2>おすすすめレシピ</h2>
+<div>
+	<% @all_ranks.each do |recipe| %>
+</div>
+<%= render partial: 'recipes/recipes', collection: @recipes, as: :recipe %>
+<% end %>
