@@ -1,0 +1,26 @@
+<%# ログイン時 %>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#"><img src="/assets/logo.png" alt="" class="logo"></a>
+    </div>
+    <div class="collapse navbar-collapse" id="navbarEexample">
+      <ul class="nav navbar-nav", style="list-style: none;">
+          <li>
+            <%= form_tag(recipes_path,:method => 'get', class: "navbar-form navbar-left") do %>
+            <%= text_field_tag :recipe, params[:recipe], class: "form-control", placeholder:"気になるレシピを検索!!" %>
+            <%= submit_tag 'Search', :title => nil, class: "btn btn-default" %>
+            <% end %>
+        </li>
+      </ul>
+       <p class="navbar-text navbar-right">
+        <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: "nav-link text-white " %>
+      </p>
+      <p class="navbar-text navbar-right">ようこそ、
+        <%= link_to user_path(current_user), class: "navbar-link" do  %>
+                <%= current_user.name_kanji_mei %>
+              <% end %>さん
+      </p>
+    </div>
+  </div>
+</nav>

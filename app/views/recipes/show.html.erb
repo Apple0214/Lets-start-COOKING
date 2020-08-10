@@ -1,34 +1,68 @@
 <div>
-<h2>指定したレシピ</h2>
-</div>
-<div>
   <%= link_to recipe_path(@recipe.id) do %>
-  <%= attachment_image_tag @recipe, :photo, fill:"40x40", size:"40x40" %><br >
+  <%= attachment_image_tag @recipe, :photo, fill:"40x40", size:"600x400" %><br >
   <% end %>
-  レシピ名<%= @recipe.title %><br >><br >
-  ユーザー名<%= @recipe.user.name %><br >><br >
-  レシピ内容<%= @recipe.cooking %><br >><br >
-  コメント一覧
+  <h3>レシピ名</h3>
+  <h3><%= @recipe.title %></h3><br ><br >
+  <h4>ユーザー名</h4>
+  <h4><%= @recipe.user.name %></h4><br ><br >
+  <h4>レシピ内容</h4>
+  <h4><%= @recipe.cooking %></h4><br ><br >
+  <h4>コメント一覧</h4>
   <% @comments.each do |c| %>
     <div>
       <% if c.user.present? %>
         <%= link_to user_path(c.user_id) do %>
         <% end %>
       <%= c.content %><br >
-      <%= "#{c.user.name_kanji_sei} #{c.user.name_kanji_mei}" if c.user.present?%><br >
+      <%= "#{c.user.name_kanji_sei} #{c.user.name_kanji_mei}" if c.user.present?%><br>
+       <!--星評価-->
+         <div id="star-rate-<%= c.id %>"></div>
+          <script>
+          $('#star-rate-<%= c.id %>').raty({
+            size: 36,
+            starOff:  '<%= asset_path('star-off.png') %>',
+            starOn : '<%= asset_path('star-on.png') %>',
+            starHalf: '<%= asset_path('star-half.png') %>',
+            half: true,
+            readOnly: true,
+            score: <%= c.rate %>,
+          });
+          </script>
+        <!--/星評価-->
     </div><br >
   <% end %>
-  <% end %>
+  <% end %><br >
   新規コメント
   <% if user_signed_in? %>
     <%= form_with(model: [@recipe, @comment], local: true, ) do |f| %>
-      <%= f.text_area :content, class: "form-control", rows: 5 %>
+     <!-- 評価 -->
+     <div class="form-group row" id="star">
+       <%= f.label :rate,'評価 ', class:'col-md-3 col-form-label' %>
+       <%= f.hidden_field :rate, id: :review_star %>
+     </div>
+
+     <!-- 評価javascript -->
+     <script>
+      $('#star').raty({
+        size     : 36,
+        starOff:  '<%= asset_path('star-off.png') %>',
+        starOn : '<%= asset_path('star-on.png') %>',
+        starHalf: '<%= asset_path('star-half.png') %>',
+        scoreName: 'post[rate]',
+        half: true,
+      });
+    </script>
+    <!-- コメント投稿 -->
+      <%= f.text_area :content, class: "form-control", rows: 5, placeholder:"まずは投稿してみましょう！投稿してから編集もできます！" %>
       <%= button_tag type: "submit", class: "btn btn-success float-right mt-1" do %>
         <i class="far fa-comments"></i> コメントする
       <% end %>
     <% end %>
-  <% end %>><br >
-  いいね<%= render 'recipes' %>
+  <% end %><br >
+  <div class="index_like_<%= @recipe.id %>">
+  いいね<%= render 'likes/like', recipe: @recipe %>
+  </div>
 </div>
 
 <h2>関連したレシピ一覧</h2>
@@ -45,8 +79,8 @@
       <th><%= recipe.user.name %></th>
       <th><%= recipe.created_at %></th>
       <!-- いいね機能 -->
-    <td>
-      <%= render 'recipes' %>
+    <td class="index_like_<%= recipe.id %>">
+      <%= render 'likes/like', recipe: recipe %>
     </td>
       <!-- コメント数確認機能 -->
     <td>コメント数：<%= recipe.comments.count %></td>

@@ -3,7 +3,7 @@ class CommentsController < ApplicationController
 
   def create
   	@recipe = Recipe.find(params[:recipe_id])
-    @comment = @recipe.comments.build({content: params[:comment][:content]})
+    @comment = @recipe.comments.build({content: params[:comment][:content], rate: params[:post][:rate]})
     @comment.user_id = current_user.id
   	if @comment.save
   		flash[:success] = "コメントに成功しました"

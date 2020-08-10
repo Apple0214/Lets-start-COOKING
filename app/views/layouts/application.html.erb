@@ -10,7 +10,15 @@
   </head>
 
   <body>
-    <%= link_to 'logout',destroy_user_session_path, method: :delete %>
+    <header>
+      <% if user_signed_in? %>
+        <%= render 'layouts/header_login' %>
+        <div class="header-bottom"></div>
+      <% else %>
+        <%= render 'layouts/header_unknown' %>
+        <div class="header-bottom"></div>
+      <% end %>
+    </header>
     <%= yield %>
   </body>
 </html>

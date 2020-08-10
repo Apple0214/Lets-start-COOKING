@@ -2,19 +2,20 @@ Rails.application.routes.draw do
   get 'recipes/index'
   get 'recipes/show'
   get 'recipes/new'
-  get 'recipes/edit'
+  get "recipes/:id/edit"=>"recipes#edit"
+  post "recipes/:id/update"=>"recipes#update"
   devise_for :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  post   '/like/:home_id' => 'likes#like',   as: 'like'
-  delete '/like/:home_id' => 'likes#unlike', as: 'unlike'
+  get 'likes/index'
+  post '/like/:id' => 'likes#like',   as: 'like'
+  delete '/like/:id' => 'likes#unlike', as: 'unlike'
   root 'homes#index'
   resources :comments, only: [:index, :show]
-  resources :favorite_recipes, only: [:index, :show]
   resources :genres, only: [:index, :show, :new, :create]
   #ネストすることによって、どのレシピに対するコメントかが分かるようにしたい。
-  resources :recipes, only: [:index, :show, :new, :create] do
+  resources :recipes, only: [:index, :show, :new, :edit, :create] do
     resources :comments, only: [:create]
-    resources :likes, only: [:create, :destroy]
+    resource :likes, only: [:create, :destroy, :index]
   end
   resources :homes, only: [:index, :new]
   resources :user,only: [:show, :edit, :new]

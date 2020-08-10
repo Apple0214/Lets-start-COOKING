@@ -1,1 +1,1 @@
-$("<%= @id_name %>").html('<%= escape_javascript(render("likes/like", recipe: @recipe  )) %>');
+$(".index_like_<%= @recipe.id %>").html('<%= escape_javascript(render("likes/like", recipe: @recipe  )) %>');

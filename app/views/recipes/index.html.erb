@@ -1,18 +1,63 @@
 <div>
-<h2>全てのレシピ</h2>
+<h2>該当レシピ</h2>
 <p>（全<%= @recipes.count %>件）</p>
 </div>
-<div>
+<!-- <div>
+  <%# @recipes.each do |recipe| %>
+  <%#= attachment_image_tag recipe, :photo, fill:"40x40", size:"40x40" %>
+  <%#= link_to recipe_path(recipe.id) do %>
+  <%#= recipe.title %>
+ <%# end %>
+ <%# end %>
+</div> -->
+
+<div class="container-fluid">
+  <div class="row sampleRow">
   <% @recipes.each do |recipe| %>
-  <%= attachment_image_tag recipe, :photo, fill:"40x40", size:"40x40" %>
-  <%= link_to recipe_path(recipe.id) do %>
-  <%= recipe.title %>
- <% end %>
- <% end %>
+          <!--星評価-->
+          <script>
+          $('#star-rate-<%= recipe.id %>').raty({
+            size: 36,
+            starOff:  '<%= asset_path('star-off.png') %>',
+            starOn : '<%= asset_path('star-on.png') %>',
+            starHalf: '<%= asset_path('star-half.png') %>',
+            half: true,
+            readOnly: true,
+            score: "#{recipe.comments.average(:rate).to_f.round(1)}",
+          });
+          </script>  
+        <!--/星評価-->
+
+    <div class="col-xs-12 col-md-6">
+      <%= attachment_image_tag recipe, :photo, fill:"40x40", size:"40x40" %>
+      <%= link_to recipe_path(recipe.id) do %>
+        <%= recipe.title %>
+      <% end %>
+    </div>
+
+    <div class="col-xs-12 col-md-6">
+      <p class="recipes-title"><%= link_to recipe.user.name, recipe.user %></p>
+      <p><%= recipe.created_at %></p>
+      <h4 class="mb-3">評価：<%= recipe.comments.average(:rate).to_f.round(1) %>点 | <%= recipe.title %></h4>
+      <div id="star-rate-<%= recipe.id %>"></div>
+      <% recipe.comments.each do |comment| %>
+        <p><%= comment.content %></p>
+        <% if current_user == comment.user %>
+          <button><%=link_to("/recipes/#{@recipe.id}/edit") %></button>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+  </div>
 </div>
+
+
 <h2>おすすすめレシピ</h2>
 <div>
-	<% @all_ranks.each do |recipe| %>
+  <% @all_ranks.each do |recipe| %>
+	<div>
+	<%= recipe.title %>
+	<%= render partial: 'recipes/recipes', collection: @recipes, as: :recipe %>
+    </div>
+  <% end %>
 </div>
-<%= render partial: 'recipes/recipes', collection: @recipes, as: :recipe %>
-<% end %>

@@ -3,7 +3,8 @@ class RecipesController < ApplicationController
   before_action :authenticate_user!, only: [:show, :create]
 
   def index
-  	@recipes = Recipe.all #投稿一覧表示
+    search_word = params["recipe"]
+  	@recipes = Recipe.where(['title LIKE ?', "%#{search_word}%"]) #検索に関する投稿一覧表示
     @recipe = Recipe.new #新規投稿できるように
     @all_ranks = Recipe.find(Like.group(:recipe_id).order('count(recipe_id) desc').limit(3).pluck(:recipe_id))
   end
@@ -27,8 +28,18 @@ class RecipesController < ApplicationController
     genre = Genre.find_or_create_by(name: params[:recipe][:genre_id])
     @recipe.user_id = current_user.id
     @recipe.genre_id = genre.id
-    @recipe.save!
-    redirect_to recipes_path
+    if @recipe.save
+      redirect_to recipes_path
+    else
+      render :new
+    end
+  end
+
+  def update
+    @comment = Comment.find_by(id:params[:id])
+    @comment.content = params[:content]
+    @comment.save
+    redirect_to("/recipes/index")
   end
 
 private
