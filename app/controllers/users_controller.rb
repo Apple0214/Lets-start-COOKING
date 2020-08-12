@@ -8,6 +8,10 @@ class UsersController < ApplicationController
 	  @recipe = Recipe.new
 	end
 
+	def edit
+		@user = User.find(params[:id])
+	end
+
   private
 
   def user_params

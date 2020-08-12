@@ -2,7 +2,9 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#"><img src="/assets/logo.png" alt="" class="logo"></a>
+      <%= link_to root_path, class: "navbar-brand" do %>
+      <img src="/assets/logo.png" alt="" class="logo">
+      <% end %>
     </div>
     <div class="collapse navbar-collapse" id="navbarEexample">
       <ul class="nav navbar-nav", style="list-style: none;">
@@ -17,9 +19,21 @@
         <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: "nav-link text-white " %>
       </p>
       <p class="navbar-text navbar-right">ようこそ、
-        <%= link_to user_path(current_user), class: "navbar-link" do  %>
+        <%= link_to edit_user_path(current_user), class: "navbar-link" do  %>
                 <%= current_user.name_kanji_mei %>
               <% end %>さん
+      </p>
+      <p class="navbar-text navbar-right">
+        <%= link_to "いいねしたレシピ", likes_index_path, class: "navbar-link" %>
+      </p>
+      <p class="navbar-text navbar-right">
+        <%= link_to "レシピ一覧", recipes_path, class: "navbar-link" %>
+      </p>
+      <p class="navbar-text navbar-right">
+        <%= link_to "ジャンル一覧", genres_path, class: "navbar-link" %>
+      </p>
+      <p class="navbar-text navbar-right">
+        <%= link_to "新規レシピ投稿", new_recipe_path, class: "navbar-link" %>
       </p>
     </div>
   </div>

@@ -1,36 +1,16 @@
-<header>
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class= "col-sm-3 col-sm-offset-1">
-    </div>
-  </div>
-</div>
-</header>
-<br ><br >
-<body>
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-sm-3">
-      <div class="panel panel-default">
-        <div class="list-group">
-          <%= link_to "いいねしたレシピ", likes_index_path, class: "list-group-item" %>
-          <%= link_to "新規レシピ投稿", new_recipe_path, class: "list-group-item" %>
-          <%= link_to "ジャンル一覧", genres_path, class: "list-group-item" %>
-        </div>
-      </div>
-    </div>
     <div class="col-sm-9">
-      <div>レシピ一覧</div>
+      <h3>レシピ一覧</h3>
       <ul>
         <% @recipes.each do |recipe| %>
       <li>
         <%= attachment_image_tag @recipe, :photo, fill:"40x40", size:"40x40" %>
         <%= link_to recipe.title, recipe %>
-        <%= recipe.created_at %>
+        <%= recipe.created_at.strftime("%Y-%m-%d %H:%M") %>
       </li>
       <% end %>
     </ul>
     </div>
   </div>
 </div>
-</body>

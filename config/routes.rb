@@ -18,5 +18,5 @@ Rails.application.routes.draw do
     resource :likes, only: [:create, :destroy, :index]
   end
   resources :homes, only: [:index, :new]
-  resources :user,only: [:show, :edit, :new]
+  resources :users,only: [:show, :edit, :new]
 end

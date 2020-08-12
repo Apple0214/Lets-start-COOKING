@@ -8,6 +8,11 @@ class Recipe < ApplicationRecord
 
 	attachment :photo
 
+	#空データを禁止
+	validates :title, presence: true
+	validates :item, presence: true
+	validates :cooking, presence: true
+
 
   def liked_by?(user)
   	likes.where(user_id: user.id).exists?

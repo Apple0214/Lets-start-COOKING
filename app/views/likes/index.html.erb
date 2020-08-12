@@ -1,12 +1,14 @@
-<div>
+<div class="container">
+  <div class="row">
 	<h2>いいねしたレシピ一覧</h2>
 	<p>（全<%= @recipes.count %>件）</p>
-</div>
-<div>
+  </div>
+  <div class="row">
 	<% @recipes.each do |recipe| %>
 	    <%= attachment_image_tag recipe, :photo, fill:"40x40", size:"40x40" %>
 	    <%= link_to recipe_path(recipe.id) do %>
 		    <%= recipe.title %>
   		<% end %>
 	<% end %>
+  </div>
 </div>

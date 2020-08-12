@@ -18,6 +18,22 @@ class CommentsController < ApplicationController
   	redirect_to request.referer
   end
 
+  def edit
+    @comment = Comment.find_by(id: params[:id])
+    if @comment.user_id = current_user.id
+      redirect_to edit_recipe_path
+    else
+      redirect_to request.referer
+    end
+  end
+
+   def update
+    @comment = Comment.find_by(id:params[:id])
+    @comment.content = params[:content]
+    @comment.save
+    redirect_to("/recipes/index")
+  end
+
   private
 
   def recipe_comment_params

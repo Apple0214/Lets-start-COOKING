@@ -3,9 +3,17 @@
 <p>（全<%= @genres.count %>件）</p>
 </div>
 <div>
-  <% @genres.each do |genre| %>
-  <%= link_to genre_path(genre.id) do %>
-  <%= genre.name %>
- <% end %>
- <% end %>
+	<table class="table table-hover table-inverse">
+	<tr>
+	<th>ジャンル名</th>
+	</tr>
+	<% @genres.each do |genre| %>
+	<tr>
+	<th><%= link_to genre_path(genre.id) do %>
+		<%= genre.name %>
+	</th>
+		<% end %>
+		<% end %>
+	</tr>
+	</table>
 </div>

@@ -42,6 +42,10 @@ class RecipesController < ApplicationController
     redirect_to("/recipes/index")
   end
 
+  def edit
+    @recipe = Recipe.find_by(id: params[:id])
+  end
+
 private
 
   def recipes_params
