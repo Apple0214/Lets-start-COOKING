@@ -12,7 +12,10 @@ class User < ApplicationRecord
   has_many :favorite_recipes, through: :favorite, source: :recipe
 
   #空データを禁止,長さの限定
-  validates :name, presence: true, length: { maximum: 50 }
+  validates :name_kanji_sei, presence: true, length: { maximum: 50 }
+  validates :name_kanji_mei, presence: true, length: { maximum: 50 }
+  validates :name_kana_mei, presence: true, length: { maximum: 50 }
+  validates :name_kana_sei, presence: true, length: { maximum: 50 }
   #emailの重複,適切な文字のみに制限
   validates :email, presence: true, uniqueness: true, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i}
 
